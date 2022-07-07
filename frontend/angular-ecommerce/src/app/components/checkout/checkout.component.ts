@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Country } from 'src/app/common/country';
+import { State } from 'src/app/common/state';
 import { ShopFormService } from 'src/app/services/shop-form.service';
 
 @Component({
@@ -15,6 +17,12 @@ export class CheckoutComponent implements OnInit {
 
   creditCardMonths: number[] = [];
   creditCardYears: number[] = [];
+
+  countries: Country[] = [];
+  states: State[] = [];
+
+  shippingAddressStates: State[] = [];
+  billingAddressStates: State[] = [];
 
   constructor(private formBuilder: FormBuilder, private shopFormService: ShopFormService) { }
 
@@ -64,17 +72,45 @@ export class CheckoutComponent implements OnInit {
       }
     );
 
+    this.shopFormService.getCountries().subscribe(
+      data => {
+        this.countries = data;
+      }
+    );
+
     }
 
+  getStates(formGroupName: string) {
+    const formGroup = this.checkoutFormGroup.get(formGroupName)!;
+    const countryCode = formGroup.value.country.code;
+    const countryName = formGroup.value.country.name;
+    this.shopFormService.getStates(countryCode).subscribe(
+      data => {
+        if(formGroupName == 'shippingAddress'){
+          this.shippingAddressStates = data;
+        }else{
+          this.billingAddressStates = data;
+        }
+
+        formGroup.get('state')!.setValue(data[0]);
+      }
+
+
+    )
+
+  }
 
 
   copyShipToBill(event){
     if(event.target.checked){
       this.checkoutFormGroup.controls['billingAddress']
       .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
+
+      this.billingAddressStates = this.shippingAddressStates;
     }else{
 
       this.checkoutFormGroup.controls['billingAddress'].reset();
+      this.billingAddressStates = [];
     }
   }
 
