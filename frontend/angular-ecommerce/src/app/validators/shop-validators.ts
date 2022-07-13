@@ -4,10 +4,14 @@ export class ShopValidators {
 
     static notOnlyWhitespace(control: FormControl): ValidationErrors {
         
-        if(control.value != null && control.value.trim().length == 0) {
-            return {'notOnlyWhitespace': true};
-        }else{
-            return {'notOnlyWhitespace': false};
+        if ((control.value != null) && (control.value.trim().length === 0)) {
+
+            // invalid, return error object
+            return { 'notOnlyWhitespace': true };
+        }
+        else {
+            // valid, return null
+            return null;
         }
     }
 

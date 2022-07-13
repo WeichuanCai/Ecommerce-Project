@@ -12,6 +12,7 @@
     "noImplicitAny": false,
     "noFallthroughCasesInSwitch": true,
     "strictPropertyInitialization": false,
+    "strictNullChecks": false,
     "sourceMap": true,
     "suppressImplicitAnyIndexErrors": true,
     "declaration": false,

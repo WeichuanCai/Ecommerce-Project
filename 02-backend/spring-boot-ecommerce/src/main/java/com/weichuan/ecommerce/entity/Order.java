@@ -42,7 +42,7 @@ public class Order {
     private Date lastUpdated;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    private Set<OrderItem> orderItem = new HashSet<>();
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -50,7 +50,7 @@ public class Order {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "shipping_address_id", referencedColumnName = "id")
-    private Address shippingAddrres;
+    private Address shippingAddress;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "billing_address_id", referencedColumnName = "id")
@@ -58,10 +58,10 @@ public class Order {
 
     public void add(OrderItem item){
         if(item != null){
-            if(orderItem == null){
-                orderItem = new HashSet<>();
+            if(orderItems == null){
+                orderItems = new HashSet<>();
             }
-            orderItem.add(item);
+            orderItems.add(item);
             item.setOrder(this);
 
         }
