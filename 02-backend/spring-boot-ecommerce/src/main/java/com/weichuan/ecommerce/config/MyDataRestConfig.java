@@ -1,10 +1,7 @@
 package com.weichuan.ecommerce.config;
 
 
-import com.weichuan.ecommerce.entity.Country;
-import com.weichuan.ecommerce.entity.Product;
-import com.weichuan.ecommerce.entity.ProductCategory;
-import com.weichuan.ecommerce.entity.State;
+import com.weichuan.ecommerce.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -36,7 +33,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         disableHttpMethods(ProductCategory.class, config, theUnsupportedActions);
         disableHttpMethods(Country.class, config, theUnsupportedActions);
         disableHttpMethods(State.class, config, theUnsupportedActions);
-
+        disableHttpMethods(Order.class, config, theUnsupportedActions);
         exposeIds(config);
     }
 
